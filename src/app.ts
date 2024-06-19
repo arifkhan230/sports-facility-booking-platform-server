@@ -1,6 +1,7 @@
 import express, { Application, NextFunction, Request, Response } from "express";
 import cors from "cors";
 import router from "./app/routes";
+import globalErrorHandler from "./app/middlewares/globalErrorHandlers";
 
 export const app: Application = express();
 
@@ -24,14 +25,4 @@ app.all("*", (req: Request, res: Response) => {
 });
 
 // global error handler
-app.use((error: unknown, req: Request, res: Response, next: NextFunction) => {
-  if (error) {
-    res.status(400).json({
-      success: false,
-      message: "something went wrong",
-      error,
-    });
-  } else {
-    next();
-  }
-});
+app.use(globalErrorHandler);
