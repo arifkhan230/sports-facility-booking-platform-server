@@ -7,8 +7,16 @@ const router = Router();
 
 router.post(
   "/",
-  validateRequest(FacilityValidations.createFacilitySchema),
+  validateRequest(FacilityValidations.createFacilityValidationSchema),
   FacilityController.createFacility
 );
+
+router.put(
+  "/:id",
+  validateRequest(FacilityValidations.updateFacilityValidationSchema),
+  FacilityController.updateFacility
+);
+
+router.get("/", FacilityController.getAllFacility);
 
 export const FacilityRoutes = router;
