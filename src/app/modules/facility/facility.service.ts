@@ -30,8 +30,24 @@ const updateFacilityIntoDB = async (
   return result;
 };
 
+const deleteFacilityFromDB = async (id: string) => {
+  const facility = await Facility.findById(id);
+
+  if (!facility) {
+    throw new AppError(httpStatus.NOT_FOUND, "Facility not found");
+  }
+
+  const result = await Facility.findByIdAndUpdate(
+    id,
+    { isDeleted: true },
+    { new: true, runValidators: true }
+  );
+  return result;
+};
+
 export const FacilityServices = {
   createFacilityIntoDB,
   getAllFacilityFromDB,
   updateFacilityIntoDB,
+  deleteFacilityFromDB,
 };

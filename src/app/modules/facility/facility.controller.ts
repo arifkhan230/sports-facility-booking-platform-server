@@ -40,8 +40,22 @@ const updateFacility = catchAsync(async (req, res) => {
   });
 });
 
+// updating facility
+const deleteFacility = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await FacilityServices.deleteFacilityFromDB(id);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Facility deleted successfully",
+    data: result,
+  });
+});
+
 export const FacilityController = {
   createFacility,
   getAllFacility,
   updateFacility,
+  deleteFacility,
 };

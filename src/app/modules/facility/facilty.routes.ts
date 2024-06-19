@@ -17,6 +17,8 @@ router.put(
   FacilityController.updateFacility
 );
 
+router.delete("/:id", FacilityController.deleteFacility);
+
 router.get("/", FacilityController.getAllFacility);
 
 export const FacilityRoutes = router;
