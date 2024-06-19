@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(cors());
 
 // applications routes
-app.use("/api/v1", router);
+app.use("/api", router);
 
 app.get("/", (req, res) => {
   res.send("Welcome to the Sports Facility Booking Platform server");
