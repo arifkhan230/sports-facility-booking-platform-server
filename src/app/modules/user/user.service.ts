@@ -4,6 +4,7 @@ import AppError from "../../errors/AppError";
 import { TUser, TUserLogin } from "./user.interface";
 import { User } from "./user.model";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 
 const createUserIntoDB = async (payload: TUser) => {
   const result = await User.create(payload);
@@ -12,15 +13,25 @@ const createUserIntoDB = async (payload: TUser) => {
 
 const loginUser = async (payload: TUserLogin) => {
   const user = await User.findOne({ email: payload?.email });
-  console.log(user);
 
+  // checking if the user exist
   if (!user) {
     throw new AppError(httpStatus.NOT_FOUND, "User not found");
   }
 
+  // checking password is correct or not
+  const isPasswordValid = await bcrypt.compare(
+    payload?.password,
+    user?.password
+  );
+
+  if (!isPasswordValid) {
+    throw new AppError(httpStatus.BAD_REQUEST, "Password not matched");
+  }
+
   const jwtPayload = {
-    userId: "arif",
-    role: "user",
+    email: user?.email,
+    role: user?.role,
   };
 
   const accessToken = jwt.sign(jwtPayload, config.jwt_access_token as string, {
