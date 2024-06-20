@@ -8,7 +8,7 @@ const bookingSchema = new Schema<TBooking>({
     ref: "Facility",
   },
   date: {
-    type: Date,
+    type: String,
     required: true,
   },
   startTime: {
@@ -34,5 +34,10 @@ const bookingSchema = new Schema<TBooking>({
     },
   },
 });
+
+// bookingSchema.pre("save", function (req, next) {
+//   const booking = this;
+//   const currentUser = req.user;
+// });
 
 export const Booking = model<TBooking>("Booking", bookingSchema);
