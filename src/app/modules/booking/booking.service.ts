@@ -10,10 +10,10 @@ const createBookingIntoDB = async (
   payload: TBooking,
   currentUser: JwtPayload
 ) => {
-  const { user } = currentUser;
+  const { userId } = currentUser;
 
   //   checking if the user exist
-  const isUserExist = await User.findById(user);
+  const isUserExist = await User.findById(userId);
 
   if (!isUserExist) {
     throw new AppError(httpStatus.NOT_FOUND, "user not found");
@@ -26,6 +26,25 @@ const createBookingIntoDB = async (
     throw new AppError(httpStatus.NOT_FOUND, "facility not found");
   }
 
+  // checking if the facility slot available
+  const scheduledTime = await Booking.find({ date: payload?.date }).select(
+    "startTime endTime"
+  );
+
+  for (const schedule of scheduledTime) {
+    const existingStartTime = new Date(`1999-01-01T${schedule.startTime}`);
+    const existingEndTime = new Date(`1999-01-01T${schedule.endTime}`);
+    const newStartTime = new Date(`1999-01-01T${payload.startTime}`);
+    const newEndTime = new Date(`1999-01-01T${payload.endTime}`);
+
+    if (newStartTime < existingEndTime && newEndTime > existingStartTime) {
+      throw new AppError(
+        httpStatus.CONFLICT,
+        "Facility not available at this time"
+      );
+    }
+  }
+
   //   calculating payable amount
   const startTime = new Date(`1999-06-12T${payload.startTime}:00`);
   const endTime = new Date(`1999-06-12T${payload.endTime}:00`);
@@ -35,7 +54,7 @@ const createBookingIntoDB = async (
     isFacilityExists?.pricePerHour;
 
   //   appending values to the payload
-  payload.user = user;
+  payload.user = userId;
   payload.payableAmount = payableAmount;
   payload.isBooked = "confirmed";
 
