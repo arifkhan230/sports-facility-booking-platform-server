@@ -21,6 +21,7 @@ const userSchema = new Schema<TUser>({
   password: {
     type: String,
     required: true,
+    select: 0,
   },
   phone: {
     type: String,
@@ -38,6 +39,7 @@ const userSchema = new Schema<TUser>({
 });
 
 userSchema.pre("save", async function (next) {
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
   const user = this;
   user.password = await bcrypt.hash(
     user.password,
@@ -47,6 +49,7 @@ userSchema.pre("save", async function (next) {
 });
 
 userSchema.post("save", function (doc, next) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (doc as any).password = undefined;
   next();
 });

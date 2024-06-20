@@ -14,6 +14,32 @@ const createBooking = catchAsync(async (req, res) => {
   });
 });
 
+const checkAvailableSlot = catchAsync(async (req, res) => {
+  const date =
+    (req.query.date as string) || new Date().toISOString().split("T")[0];
+  const result = await BookingServices.checkAvailableSlot(date);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Availability checked successfully",
+    data: result,
+  });
+});
+
+const getAllBookings = catchAsync(async (req, res) => {
+  const result = await BookingServices.getAllBookingsFromDB();
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Bookings retrieved successfully",
+    data: result,
+  });
+});
+
 export const BookingController = {
   createBooking,
+  checkAvailableSlot,
+  getAllBookings,
 };

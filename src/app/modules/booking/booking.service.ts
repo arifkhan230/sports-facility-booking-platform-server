@@ -5,6 +5,7 @@ import AppError from "../../errors/AppError";
 import httpStatus from "http-status";
 import { Facility } from "../facility/facility.model";
 import { Booking } from "./booking.model";
+import { getAvailableTimeSlots } from "./booking.utils";
 
 const createBookingIntoDB = async (
   payload: TBooking,
@@ -62,6 +63,25 @@ const createBookingIntoDB = async (
   return result;
 };
 
+const checkAvailableSlot = async (date: string) => {
+  const scheduledSlots = await Booking.find({ date }).select(
+    "startTime endTime -_id"
+  );
+
+  // checking for the available slots
+  const availableTimeSlot = getAvailableTimeSlots(scheduledSlots);
+
+  return availableTimeSlot;
+};
+
+const getAllBookingsFromDB = async () => {
+  const result = await Booking.find().populate("user").populate("facility");
+
+  return result;
+};
+
 export const BookingServices = {
   createBookingIntoDB,
+  checkAvailableSlot,
+  getAllBookingsFromDB,
 };

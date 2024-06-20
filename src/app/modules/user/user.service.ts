@@ -12,7 +12,9 @@ const createUserIntoDB = async (payload: TUser) => {
 };
 
 const loginUser = async (payload: TUserLogin) => {
-  const user = await User.findOne({ email: payload?.email });
+  const user = await User.findOne({ email: payload?.email }).select(
+    "password role"
+  );
 
   // checking if the user exist
   if (!user) {

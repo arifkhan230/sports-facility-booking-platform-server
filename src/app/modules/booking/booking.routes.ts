@@ -14,4 +14,12 @@ router.post(
   BookingController.createBooking
 );
 
+router.get("/check-availability", BookingController.checkAvailableSlot);
+
+router.get(
+  "/bookings",
+  auth(USER_ROLE.admin),
+  BookingController.getAllBookings
+);
+
 export const BookingRoutes = router;
