@@ -80,8 +80,15 @@ const getAllBookingsFromDB = async () => {
   return result;
 };
 
+const getBookingsOfUserFromDB = async (user: string) => {
+  const result = await Booking.find({ user }).populate("facility");
+
+  return result;
+};
+
 export const BookingServices = {
   createBookingIntoDB,
   checkAvailableSlot,
   getAllBookingsFromDB,
+  getBookingsOfUserFromDB,
 };

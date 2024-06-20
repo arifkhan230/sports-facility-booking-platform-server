@@ -22,4 +22,10 @@ router.get(
   BookingController.getAllBookings
 );
 
+router.get(
+  "/bookings/:user",
+  auth(USER_ROLE.user),
+  BookingController.getBookingsOfUser
+);
+
 export const BookingRoutes = router;
