@@ -2,6 +2,8 @@ import { Router } from "express";
 import validateRequest from "../../middlewares/validateRequest";
 import { FacilityValidations } from "./facility.validation";
 import { FacilityController } from "./facility.controller";
+import auth from "../../middlewares/auth";
+import { USER_ROLE } from "../user/user.constant";
 
 const router = Router();
 
@@ -19,6 +21,6 @@ router.put(
 
 router.delete("/:id", FacilityController.deleteFacility);
 
-router.get("/", FacilityController.getAllFacility);
+router.get("/", auth(USER_ROLE.user), FacilityController.getAllFacility);
 
 export const FacilityRoutes = router;

@@ -9,7 +9,7 @@ const createFacilityIntoDB = async (payload: TFacility) => {
 };
 
 const getAllFacilityFromDB = async () => {
-  const result = await Facility.find();
+  const result = await Facility.find({ isDeleted: false });
   return result;
 };
 
