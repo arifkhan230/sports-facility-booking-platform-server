@@ -76,13 +76,20 @@ const checkAvailableSlot = async (date: string) => {
 
 const getAllBookingsFromDB = async () => {
   const result = await Booking.find().populate("user").populate("facility");
-
   return result;
 };
 
 const getBookingsOfUserFromDB = async (user: string) => {
   const result = await Booking.find({ user }).populate("facility");
+  return result;
+};
 
+const cancelBookingFromDB = async (id: string) => {
+  const result = await Booking.findByIdAndUpdate(
+    id,
+    { isBooked: "canceled" },
+    { new: true, runValidators: true }
+  ).populate("facility");
   return result;
 };
 
@@ -91,4 +98,5 @@ export const BookingServices = {
   checkAvailableSlot,
   getAllBookingsFromDB,
   getBookingsOfUserFromDB,
+  cancelBookingFromDB,
 };
