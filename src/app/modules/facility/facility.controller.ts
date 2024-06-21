@@ -20,10 +20,12 @@ const getAllFacility = catchAsync(async (req, res) => {
   const result = await FacilityServices.getAllFacilityFromDB();
 
   sendResponse(res, {
-    success: true,
-    statusCode: httpStatus.OK,
-    message: "Facilities retrieved successfully",
-    data: result,
+    success: result?.length ? true : false,
+    statusCode: result?.length ? httpStatus.OK : httpStatus.NOT_FOUND,
+    message: result?.length
+      ? "Facilities retrieved successfully"
+      : "No Data Found",
+    data: result?.length ? result : [],
   });
 });
 

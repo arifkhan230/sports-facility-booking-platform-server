@@ -5,10 +5,20 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 import config from "../config";
 import { User } from "../modules/user/user.model";
 import { TUserRole } from "../modules/user/user.interface";
+import sendResponse from "../utils/sendResponse";
 
 const auth = (...requiredRoles: TUserRole[]) => {
   return catchAsync(async (req, res, next) => {
-    const token = req.headers.authorization;
+    const header = req.headers["authorization"];
+    const token = header && header.split(" ")[1];
+    const bearer = header && header.split(" ")[0];
+
+    if (bearer !== "Bearer") {
+      throw new AppError(
+        httpStatus.UNAUTHORIZED,
+        "Authorization header must contain 'Bearer'  !"
+      );
+    }
 
     // check if the token is sent from client
     if (!token) {
@@ -31,7 +41,12 @@ const auth = (...requiredRoles: TUserRole[]) => {
     }
 
     if (requiredRoles && !requiredRoles.includes(role)) {
-      throw new AppError(httpStatus.UNAUTHORIZED, "You are not authorized  !");
+      sendResponse(res, {
+        success: false,
+        statusCode: httpStatus.UNAUTHORIZED,
+        message: "You have no access to this route",
+        data: undefined,
+      });
     }
 
     req.user = decoded as JwtPayload;

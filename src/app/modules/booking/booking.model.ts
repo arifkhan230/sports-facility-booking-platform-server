@@ -2,11 +2,6 @@ import { Schema, model } from "mongoose";
 import { TBooking } from "./booking.interface";
 
 const bookingSchema = new Schema<TBooking>({
-  facility: {
-    type: Schema.ObjectId,
-    required: true,
-    ref: "Facility",
-  },
   date: {
     type: String,
     required: true,
@@ -24,6 +19,11 @@ const bookingSchema = new Schema<TBooking>({
     required: true,
     ref: "User",
   },
+  facility: {
+    type: Schema.ObjectId,
+    required: true,
+    ref: "Facility",
+  },
   payableAmount: {
     type: Number,
     required: true,
@@ -35,10 +35,5 @@ const bookingSchema = new Schema<TBooking>({
     },
   },
 });
-
-// bookingSchema.pre("save", function (req, next) {
-//   const booking = this;
-//   const currentUser = req.user;
-// });
 
 export const Booking = model<TBooking>("Booking", bookingSchema);

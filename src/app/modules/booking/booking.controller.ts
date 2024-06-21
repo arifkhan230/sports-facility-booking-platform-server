@@ -31,10 +31,12 @@ const getAllBookings = catchAsync(async (req, res) => {
   const result = await BookingServices.getAllBookingsFromDB();
 
   sendResponse(res, {
-    success: true,
-    statusCode: httpStatus.OK,
-    message: "Bookings retrieved successfully",
-    data: result,
+    success: result?.length ? true : false,
+    statusCode: result?.length ? httpStatus.OK : httpStatus.NOT_FOUND,
+    message: result?.length
+      ? "Bookings retrieved successfully"
+      : "No Data Found",
+    data: result?.length ? result : [],
   });
 });
 
@@ -43,10 +45,12 @@ const getBookingsOfUser = catchAsync(async (req, res) => {
   const result = await BookingServices.getBookingsOfUserFromDB(user);
 
   sendResponse(res, {
-    success: true,
-    statusCode: httpStatus.OK,
-    message: "Bookings retrieved successfully",
-    data: result,
+    success: result?.length ? true : false,
+    statusCode: result?.length ? httpStatus.OK : httpStatus.NOT_FOUND,
+    message: result?.length
+      ? "Bookings retrieved successfully"
+      : "No Data Found",
+    data: result?.length ? result : [],
   });
 });
 
