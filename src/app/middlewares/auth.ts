@@ -13,17 +13,17 @@ const auth = (...requiredRoles: TUserRole[]) => {
     const token = header && header.split(" ")[1];
     const bearer = header && header.split(" ")[0];
 
+    // check if the token is sent from client
+    if (!token) {
+      throw new AppError(httpStatus.UNAUTHORIZED, "You are not authorized  !");
+    }
+
     // checking if bearer is given
     if (bearer !== "Bearer") {
       throw new AppError(
         httpStatus.UNAUTHORIZED,
         "Authorization header must contain 'Bearer'  !"
       );
-    }
-
-    // check if the token is sent from client
-    if (!token) {
-      throw new AppError(httpStatus.UNAUTHORIZED, "You are not authorized  !");
     }
 
     // check if the token is valid
