@@ -30,16 +30,18 @@ git clone https://github.com/arifkhan230/sports-facility-booking-platform-server
 
 4. Create a .env file in the root directory and add your environment variables.
 
-`NODE_ENV='development'
-DATABASE_URL=your_database_url
-PORT=5000
-BCRYPT_SALT_ROUNDS=12
-JWT_ACCESS_TOKEN=add_a_secret_code
-JWT_ACCESS_EXPIRES_IN=add_token_expires_time(example:10d)`
+   ```
+   NODE_ENV='development'
+   DATABASE_URL=your_database_url
+   PORT=5000
+   BCRYPT_SALT_ROUNDS=12
+   JWT_ACCESS_TOKEN=add_a_secret_code
+   JWT_ACCESS_EXPIRES_IN=add_token_expires_time(example:10d)
+   ```
 
 ### Running the Application
 
-1. Now you can run the application using by applying the following command:
+1. Now you can run the application by applying following command:
 
    ```sh
    npm run start:dev
@@ -49,7 +51,7 @@ JWT_ACCESS_EXPIRES_IN=add_token_expires_time(example:10d)`
 
 ## Auth
 
-1. Create a New User
+### 1. Create a New User
 
 - Endpoint: /api/auth/signup
 
@@ -86,7 +88,7 @@ JWT_ACCESS_EXPIRES_IN=add_token_expires_time(example:10d)`
 }
 ```
 
-2. Login user
+### 2. Login user
 
 - Endpoint: /api/auth/login
 - Method: POST
@@ -121,7 +123,7 @@ JWT_ACCESS_EXPIRES_IN=add_token_expires_time(example:10d)`
 
 ## Facility
 
-3. Create a Facility (Admin Only)
+### 3. Create a Facility (Admin Only)
 
 - Endpoint:/api/facility
 
@@ -160,7 +162,7 @@ Authorization: Bearer JWT_TOKEN
 }
 ```
 
-4. Update a Facility (Admin Only)
+### 4. Update a Facility (Admin Only)
 
 - Endpoint:/api/facility/:id
 
@@ -201,7 +203,7 @@ Authorization: Bearer JWT_TOKEN
 }
 ```
 
-5. Delete a Facility - Soft Delete (Admin Only)
+### 5. Delete a Facility - Soft Delete (Admin Only)
 
 - Endpoint: /api/facility/:id
 
@@ -231,7 +233,7 @@ Authorization: Bearer JWT_TOKEN
 }
 ```
 
-6.  Get All Facilities
+### 6. Get All Facilities
 
 - Endpoint: /api/facility
 
@@ -259,7 +261,7 @@ Authorization: Bearer JWT_TOKEN
 
 ## Bookings
 
-7. Check Availability
+### 7. Check Availability
 
 - Endpoint: /api/check-availability
 
@@ -285,7 +287,7 @@ Example Response:
 }
 ```
 
-8.  Create a Booking (User Only)
+### 8. Create a Booking (User Only)
 
 - Endpoint: /api/bookings
 
@@ -328,7 +330,7 @@ Authorization: Bearer JWT_TOKEN
 }
 ```
 
-9.  View All Bookings (Admin Only)
+### 9. View All Bookings (Admin Only)
 
 - Endpoint: /api/bookings
 
@@ -376,7 +378,7 @@ Authorization: Bearer JWT_TOKEN
 }
 ```
 
-10. View Bookings by User (User Only)
+### 10. View Bookings by User (User Only)
 
 - Endpoint: /api/bookings/user
 
@@ -417,7 +419,7 @@ Authorization: Bearer JWT_TOKEN
 }
 ```
 
-11. Cancel a Booking (User Only)
+### 11. Cancel a Booking (User Only)
 
 - Endpoint: /api/bookings/:id
 
