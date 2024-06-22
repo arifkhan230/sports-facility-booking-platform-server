@@ -1,8 +1,8 @@
 import { Response } from "express";
 
 type TResponse<T> = {
-  statusCode: number;
   success: boolean;
+  statusCode: number;
   message?: string;
   token?: string;
   data: T;

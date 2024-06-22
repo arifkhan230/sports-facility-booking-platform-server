@@ -23,6 +23,10 @@ const updateFacilityIntoDB = async (
     throw new AppError(httpStatus.NOT_FOUND, "Facility not found");
   }
 
+  if (isFacilityExists?.isDeleted) {
+    throw new AppError(httpStatus.NOT_FOUND, "This facility has been deleted");
+  }
+
   const result = await Facility.findByIdAndUpdate(id, payload, {
     new: true,
     runValidators: true,

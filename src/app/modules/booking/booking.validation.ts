@@ -10,6 +10,7 @@ const timeStringSchema = z.string().refine(
   }
 );
 
+// validation schema for create booking
 const createBookingValidationSchema = z.object({
   body: z
     .object({

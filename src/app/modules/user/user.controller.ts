@@ -4,6 +4,7 @@ import sendResponse from "../../utils/sendResponse";
 import httpStatus from "http-status";
 import { User } from "./user.model";
 
+// creating new user
 const createUser = catchAsync(async (req, res) => {
   const result = await UserServices.createUserIntoDB(req.body);
 
@@ -15,6 +16,7 @@ const createUser = catchAsync(async (req, res) => {
   });
 });
 
+// login user
 const loginUser = catchAsync(async (req, res) => {
   const result = await UserServices.loginUser(req.body);
   const user = await User.findOne({ email: req?.body?.email }).select(

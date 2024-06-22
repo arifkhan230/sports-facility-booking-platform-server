@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+// validation schema for creating user
 const createUserValidationSchema = z.object({
   body: z.object({
     name: z.string({ required_error: "Name is required" }),
@@ -11,6 +12,7 @@ const createUserValidationSchema = z.object({
   }),
 });
 
+// validation schema for login user
 const userLoginValidationSchema = z.object({
   body: z.object({
     email: z.string().email(),

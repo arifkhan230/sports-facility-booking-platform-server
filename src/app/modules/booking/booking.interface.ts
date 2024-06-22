@@ -7,7 +7,7 @@ export type TBooking = {
   date: string;
   startTime: string;
   endTime: string;
-  user?: Types.ObjectId;
-  payableAmount?: number;
-  isBooked?: TIsBooked;
+  user: Types.ObjectId;
+  payableAmount: number;
+  isBooked: TIsBooked;
 };

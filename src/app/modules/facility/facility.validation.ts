@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+// validation schema for create facility
 const createFacilityValidationSchema = z.object({
   body: z.object({
     name: z.string({ required_error: "name is required" }),
@@ -10,6 +11,7 @@ const createFacilityValidationSchema = z.object({
   }),
 });
 
+// validation schema for update facility
 const updateFacilityValidationSchema = z.object({
   body: z.object({
     name: z.string({ required_error: "name is required" }).optional(),

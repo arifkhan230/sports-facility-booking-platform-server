@@ -27,6 +27,11 @@ const createBookingIntoDB = async (
     throw new AppError(httpStatus.NOT_FOUND, "facility not found");
   }
 
+  // checking is the facility deleted
+  if (isFacilityExists?.isDeleted) {
+    throw new AppError(httpStatus.NOT_FOUND, "facility has been deleted");
+  }
+
   // checking if the facility slot available
   const scheduledTime = await Booking.find({ date: payload?.date }).select(
     "startTime endTime"
@@ -63,6 +68,7 @@ const createBookingIntoDB = async (
   return result;
 };
 
+// checking for available slot on a specific date
 const checkAvailableSlot = async (date: string) => {
   const scheduledSlots = await Booking.find({ date }).select(
     "startTime endTime -_id"
@@ -74,16 +80,19 @@ const checkAvailableSlot = async (date: string) => {
   return availableTimeSlot;
 };
 
+// getting all bookings from the db
 const getAllBookingsFromDB = async () => {
   const result = await Booking.find().populate("user").populate("facility");
   return result;
 };
 
+// getting bookings of a user
 const getBookingsOfUserFromDB = async (user: string) => {
   const result = await Booking.find({ user }).populate("facility");
   return result;
 };
 
+// canceling a booking
 const cancelBookingFromDB = async (id: string) => {
   const result = await Booking.findByIdAndUpdate(
     id,

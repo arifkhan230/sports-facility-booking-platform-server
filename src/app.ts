@@ -14,10 +14,10 @@ app.use(cors());
 app.use("/api", router);
 
 app.get("/", (req, res) => {
-  res.send("Welcome to the Sports Facility Booking Platform server");
+  res.send("Welcome to the Sports Facility Booking Platform");
 });
 
-// for wrong route
+// No Route Found
 app.all("*", (req: Request, res: Response) => {
   res.status(400).json({
     success: false,

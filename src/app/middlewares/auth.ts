@@ -13,6 +13,7 @@ const auth = (...requiredRoles: TUserRole[]) => {
     const token = header && header.split(" ")[1];
     const bearer = header && header.split(" ")[0];
 
+    // checking if bearer is given
     if (bearer !== "Bearer") {
       throw new AppError(
         httpStatus.UNAUTHORIZED,
